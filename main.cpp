@@ -197,7 +197,7 @@ public:
         _head = nullptr;
     }
 
-    void saveToTxt(std::string& filename)
+    void saveToTxt(const std::string& filename)
     {
         std::ofstream outputFile(filename);
         if (!outputFile.is_open())
@@ -230,7 +230,38 @@ public:
         inputFile.close();
     }
 
-    
+    Node* findData(int data)
+    {
+        Node* current = _head;
+        while (current != nullptr)
+        {
+            if (current->getValue() == data)
+            {
+                return current;
+            }
+            current = current->getNextAddr();
+        }
+        return nullptr;
+    }
+
+    List operator+(const List& other) const
+    {
+        List result = *this;
+        Node* otherHeaad = other._head;
+        Node* current = result._head;
+
+        while (current->getNextAddr() != nullptr)
+        {
+            current = current->getNextAddr();
+        }
+        while (otherHeaad != nullptr)
+        {
+            current->setNextAddr(new Node(otherHeaad->getValue()));
+            current = current->getNextAddr();
+            otherHeaad = otherHeaad->getNextAddr();
+        }
+        return result;
+    }
 
 };
 
@@ -263,7 +294,20 @@ int main()
     std::cout << "\nLength of the list: " << lst.getLength() << std::endl;
     std::cout << std::endl;
 
-    
+    Node* foundNode = lst.findData(55);
+    if (foundNode != nullptr)
+    {
+        std::cout << "Found data: " << foundNode->getValue() << std::endl;
+    }
+    else
+    {
+        std::cout << "Data not found." << std::endl;
+    }
+
+    lst.saveToTxt("lst.txt");
+
+    List newLst;
+    newLst.readFromTxt("lst.txt");
 
 
     lst.test();
@@ -271,7 +315,11 @@ int main()
     std::cout << "\nLast item of the list: " << lst.getLast();
     std::cout << "\nLength of the list: " << lst.getLength() << std::endl;
 
+
+    List demoLst1;
+    List demoLst2;
+    List concatLists = demoLst1 + demoLst2;
+
     return 0;
 };
-
 
