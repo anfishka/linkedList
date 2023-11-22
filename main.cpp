@@ -314,12 +314,6 @@ int main()
 
     std::cout << "\nLast item of the list: " << lst.getLast();
     std::cout << "\nLength of the list: " << lst.getLength() << std::endl;
-
-
-    List demoLst1;
-    List demoLst2;
-    List concatLists = demoLst1 + demoLst2;
-
     return 0;
 };
 
